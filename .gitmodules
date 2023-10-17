@@ -7,3 +7,6 @@
 [submodule "Minecraft/vendor/glm"]
 	path = Minecraft/vendor/glm
 	url = https://github.com/g-truc/glm.git
+[submodule "Minecraft/vendor/ImGui"]
+	path = Minecraft/vendor/ImGui
+	url = https://github.com/Adam92506/imgui.git
