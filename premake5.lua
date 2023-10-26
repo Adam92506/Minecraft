@@ -16,9 +16,12 @@ IncludeDir = {}
 IncludeDir["glfw"] = "Minecraft/vendor/glfw/include"
 IncludeDir["glad"] = "Minecraft/vendor/glad/include"
 IncludeDir["glm"] = "Minecraft/vendor/glm"
+IncludeDir["stb_image"] = "Minecraft/vendor/stb_image"
+IncludeDir["ImGui"] = "Minecraft/vendor/ImGui/src"
 
 include "Minecraft/vendor/glfw"
 include "Minecraft/vendor/glad"
+include "Minecraft/vendor/ImGui"
 
 project "Minecraft"
 	location "Minecraft"
@@ -32,12 +35,14 @@ project "Minecraft"
 	pchheader "mcpch.h"
 	pchsource "Minecraft/src/mcpch.cpp"
 
-	postbuildcommands "{COPYDIR} ../Resources ../bin/%{outputdir}/Minecraft/Resources"
+	postbuildcommands "{COPYDIR} Resources/ ../bin/%{outputdir}/Minecraft/Resources"
 
 	files
 	{
 		"%{prj.name}/src/**.h",
-		"%{prj.name}/src/**.cpp"
+		"%{prj.name}/src/**.cpp",
+		"%{prj.name}/vendor/stb_image/**.h",
+		"%{prj.name}/vendor/stb_image/**.cpp"
 	}
 
 	includedirs
@@ -46,14 +51,18 @@ project "Minecraft"
 		"%{prj.name}/vendor/spdlog/include",
 		"%{IncludeDir.glfw}",
 		"%{IncludeDir.glad}",
-		"%{IncludeDir.glm}"
+		"%{IncludeDir.glm}",
+		"%{IncludeDir.stb_image}",
+		"%{IncludeDir.stb_image}/src",
+		"%{IncludeDir.ImGui}"
 	}
 
 	links
 	{
 		"GLFW",
 		"GLAD",
-		"opengl32.lib"
+		"opengl32.lib",
+		"ImGui"
 	}
 
 	filter "system:windows"

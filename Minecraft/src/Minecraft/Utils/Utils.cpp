@@ -2,9 +2,16 @@
 #include "Utils.h"
 
 #include <ShlObj.h>
+#include <GLFW/glfw3.h>
 
 namespace Minecraft
 {
+
+	// Move to platform dependant
+	float Time::GetTime()
+	{
+		return glfwGetTime();
+	}
 
 	namespace Utils
 	{

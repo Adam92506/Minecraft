@@ -1,49 +1,43 @@
 #include "mcpch.h"
-#include "WindowsInput.h"
+#include "Minecraft/Core/Input.h"
 
 #include "Minecraft/Core/Application.h"
 #include <GLFW/glfw3.h>
 
-namespace Minecraft {
+namespace Minecraft
+{
 
-	Input* Input::s_Instance = new WindowsInput();
-
-	bool WindowsInput::IsKeyPressedImpl(int keycode)
+	bool Input::IsKeyPressed(const KeyCode key)
 	{
-		auto window = static_cast<GLFWwindow*>(Application::Get().GetWindow().GetNativeWindow());
-		auto state = glfwGetKey(window, keycode);
-		return state == GLFW_PRESS || state == GLFW_REPEAT;
-	}
-
-	bool WindowsInput::IsMouseButtonPressedImpl(int keycode)
-	{
-		auto window = static_cast<GLFWwindow*>(Application::Get().GetWindow().GetNativeWindow());
-		auto state = glfwGetMouseButton(window, keycode);
+		auto* window = static_cast<GLFWwindow*>(Application::Get().GetWindow().GetNativeWindow());
+		auto state = glfwGetKey(window, static_cast<int32_t>(key));
 		return state == GLFW_PRESS;
 	}
 
-	std::pair<float, float> WindowsInput::GetMousePosImpl()
+	bool Input::IsMouseButtonPressed(const MouseCode button)
 	{
-		auto window = static_cast<GLFWwindow*>(Application::Get().GetWindow().GetNativeWindow());
+		auto* window = static_cast<GLFWwindow*>(Application::Get().GetWindow().GetNativeWindow());
+		auto state = glfwGetMouseButton(window, static_cast<int32_t>(button));
+		return state == GLFW_PRESS;
+	}
+
+	glm::vec2 Input::GetMousePos()
+	{
+		auto* window = static_cast<GLFWwindow*>(Application::Get().GetWindow().GetNativeWindow());
 		double xpos, ypos;
 		glfwGetCursorPos(window, &xpos, &ypos);
+
 		return { (float)xpos, (float)ypos };
 	}
 
-	float WindowsInput::GetMouseXImpl()
+	float Input::GetMouseX()
 	{
-		auto window = static_cast<GLFWwindow*>(Application::Get().GetWindow().GetNativeWindow());
-		double xpos, ypos;
-		glfwGetCursorPos(window, &xpos, &ypos);
-		return (float)xpos;
+		return GetMousePos().x;
 	}
 
-	float WindowsInput::GetMouseYImpl()
+	float Input::GetMouseY()
 	{
-		auto window = static_cast<GLFWwindow*>(Application::Get().GetWindow().GetNativeWindow());
-		double xpos, ypos;
-		glfwGetCursorPos(window, &xpos, &ypos);
-		return (float)ypos;
+		return GetMousePos().y;
 	}
 
 }

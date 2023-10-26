@@ -3,8 +3,6 @@
 #include "Minecraft/Core/Log.h"
 #include "Minecraft/Core/Application.h"
 
-#include "Minecraft/Utils/Utils.h"
-
 #ifdef MC_PLATFORM_WINDOWS
 
 int main()

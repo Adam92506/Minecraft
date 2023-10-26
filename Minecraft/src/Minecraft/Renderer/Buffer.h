@@ -1,7 +1,6 @@
 #pragma once
 
 #include "Minecraft/Core/Core.h"
-#include "Minecraft/Core/Log.h"
 
 namespace Minecraft {
 
