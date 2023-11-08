@@ -21,7 +21,7 @@ namespace Minecraft
 
 		static void Submit(const Ref<Shader>& shader, const Ref<VertexArray>& vertexArray, const Ref<Texture2D>& texture, const glm::mat4& transform);
 
-		static void SubmitLine(const Ref<Shader>& shader, const Ref<VertexArray>& vertexArray, const glm::mat4& transform, uint32_t vertexCount);
+		// static void SubmitLine(const Ref<Shader>& shader, const Ref<VertexArray>& vertexArray, const glm::mat4& transform, uint32_t vertexCount);
 	private:
 		struct SceneData
 		{

@@ -11,8 +11,6 @@ int main()
 	MC_INFO("Initialized Log!");
 
 	Minecraft::Application application;
-
-	return 0;
 }
 
 #endif

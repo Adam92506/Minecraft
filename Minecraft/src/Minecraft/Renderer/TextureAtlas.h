@@ -2,6 +2,8 @@
 
 #include "Texture.h"
 
+#include "Minecraft/Utils/Image.h"
+
 namespace Minecraft
 {
 
@@ -9,21 +11,27 @@ namespace Minecraft
 	{
 	public:
 		TextureAtlas() = default;
-		TextureAtlas(const std::string& filepath, float textureWidth, float textureHeight);
+		TextureAtlas(const std::string& folderPath, uint32_t textureWidth, uint32_t textureHeight, ImageFormat imageFormat)
+			: m_FolderPath(folderPath), m_TextureWidth(textureWidth), m_TextureHeight(textureHeight), m_ImageFormat(imageFormat) {}
+
+		void GenerateTextureAtlas();
+
+		uint16_t GetTextureID(const std::string& textureName) { return m_TextureIDMap[textureName]; }
 
 		const Ref<Texture2D>& GetTexture() const { return m_Texture; }
-
-		const float GetAtlasWidth() const { return m_AtlasWidth; }
-		const float GetAtlasHeight() const { return m_AtlasHeight; }
-		const float GetTextureWidth() const { return m_TextureWidth; }
-		const float GetTextureHeight() const { return m_TextureHeight; }
 	private:
-		float m_AtlasWidth, m_AtlasHeight;
-		float m_TextureWidth, m_TextureHeight;
-
+		void InsertSubTexture(uint32_t index, uint8_t* atlasImage, uint8_t* subTextureImage);
+	private:
 		Ref<Texture2D> m_Texture;
+		bool m_TextureGenerated = false;
 
-		std::string m_Filepath;
+		uint32_t m_AtlasSize;
+		uint32_t m_TextureWidth, m_TextureHeight;
+		ImageFormat m_ImageFormat;
+
+		std::unordered_map<std::string, uint16_t> m_TextureIDMap;
+
+		std::string m_FolderPath;
 	};
 
 }

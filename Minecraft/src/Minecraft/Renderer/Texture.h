@@ -1,16 +1,9 @@
 #pragma once
 
+#include "Minecraft/Utils/Image.h"
+
 namespace Minecraft
 {
-
-	enum class ImageFormat
-	{
-		None = 0,
-		R8,
-		RGB8,
-		RGBA8,
-		RGBA32F
-	};
 
 	class Texture
 	{
@@ -31,6 +24,7 @@ namespace Minecraft
 	class Texture2D : public Texture
 	{
 	public:
+		static Ref<Texture2D> Create(Image& image);
 		static Ref<Texture2D> Create(const std::string& filepath);
 	};
 

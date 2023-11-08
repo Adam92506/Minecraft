@@ -11,11 +11,11 @@
 
 #include "Minecraft/Renderer/Shader.h"
 #include "Minecraft/Renderer/Buffer.h"
-#include "Minecraft/Renderer/TextureAtlas.h"
+#include "Minecraft/Renderer/Texture.h"
 #include "Minecraft/Renderer/VertexArray.h"
 #include "Minecraft/Renderer/CameraController.h"
 
-#include "Minecraft/Chunk/Chunk.h"
+#include "Minecraft/Renderer/TextureAtlas.h"
 
 namespace Minecraft {
 
@@ -24,8 +24,6 @@ namespace Minecraft {
 	public:
 		Application();
 		~Application();
-
-		void MainLoop();
 
 		void OnEvent(Event& e);
 
@@ -45,11 +43,13 @@ namespace Minecraft {
 		float m_LastFrameTime = 0.0f;
 	private:
 		glm::vec3 m_Position;
-		Ref<Shader> m_Shader;
 		CameraController m_CameraController;
-		Ref<TextureAtlas> m_TextureAtlas;
+		TextureAtlas m_TextureAtlas;
 
-		Chunk m_Chunk;
+		Ref<VertexBuffer> m_VertexBuffer;
+		Ref<IndexBuffer> m_IndexBuffer;
+		Ref<VertexArray> m_VertexArray;
+		Ref<Shader> m_Shader;
 	private:
 		static Application* s_Instance;
 	};

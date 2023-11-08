@@ -25,15 +25,37 @@ namespace Minecraft
 		m_ImGuiWindow = CreateRef<ImGuiWindow>();
 		m_ImGuiWindow->Init();
 
-		m_TextureAtlas = CreateRef<TextureAtlas>("Resources/Textures/texture_atlas.png", 16, 16);
-
-		m_Shader = Shader::Create("Resources/Shaders/Block.glsl");
-
 		m_Position = { 0.0f, 0.0f, 0.0f };
 
-		Chunk::SetTextureAtlasSize(m_TextureAtlas->GetAtlasWidth(), m_TextureAtlas->GetAtlasHeight());
+		float vertices[4 * 5]
+		{
+			-0.5f, -0.5f, 0.0f, 0.0f, 0.0f,
+			0.5f, -0.5f, 0.0f, 1.0f, 0.0f,
+			0.5f, 0.5f, 0.0f, 1.0f, 1.0f,
+			-0.5f, 0.5f, 0.0f, 0.0f, 1.0f
+		};
 
-		m_Chunk.GenerateMesh();
+		uint32_t indecies[6]
+		{
+			2, 3, 0, 0, 1, 2
+		};
+
+		m_VertexBuffer = VertexBuffer::Create(vertices, sizeof(vertices));
+		m_VertexBuffer->SetLayout({
+			{ ShaderDataType::Float3, "a_Position" },
+			{ ShaderDataType::Float2, "a_TexCoord" }
+			});
+
+		m_IndexBuffer = IndexBuffer::Create(indecies, sizeof(indecies) / sizeof(float));
+		
+		m_VertexArray = VertexArray::Create();
+		m_VertexArray->AddVertexBuffer(m_VertexBuffer);
+		m_VertexArray->SetIndexBuffer(m_IndexBuffer);
+
+		m_TextureAtlas = TextureAtlas("assets/textures/block/", 32, 32, ImageFormat::RGBA8);
+		m_TextureAtlas.GenerateTextureAtlas();
+
+		m_Shader = Shader::Create("assets/shaders/Block.glsl");
 
 		this->Run();
 	}
@@ -53,11 +75,6 @@ namespace Minecraft
 		m_ImGuiWindow->OnEvent(e);
 	}
 
-	void Application::MainLoop()
-	{
-
-	}
-
 	void Application::Run()
 	{
 		Renderer::Init();
@@ -75,8 +92,8 @@ namespace Minecraft
 
 			Renderer::BeginScene(m_CameraController.GetCamera());
 
-			glm::mat4 transform = glm::translate(glm::mat4(1.0f), m_Position); 
-			Renderer::Submit(m_Shader, m_Chunk.GetVertexArray(), m_TextureAtlas->GetTexture(), transform);
+			glm::mat4 transform = glm::translate(glm::mat4(1.0f), m_Position);
+			Renderer::Submit(m_Shader, m_VertexArray, m_TextureAtlas.GetTexture(), transform);
 
 			if (!m_Minimized)
 			{	

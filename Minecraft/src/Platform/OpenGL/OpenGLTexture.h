@@ -10,6 +10,7 @@ namespace Minecraft
 	class OpenGLTexture2D : public Texture2D
 	{
 	public:
+		OpenGLTexture2D(Image& image);
 		OpenGLTexture2D(const std::string& filepath);
 		virtual ~OpenGLTexture2D();
 
@@ -22,6 +23,8 @@ namespace Minecraft
 		virtual void Bind(uint32_t slot = 0) const override;
 
 		virtual bool IsLoaded() const override { return m_IsLoaded; }
+	private:
+		void CreateTexture(Image& image);
 	private:
 		std::string m_Filepath;
 		bool m_IsLoaded = false;

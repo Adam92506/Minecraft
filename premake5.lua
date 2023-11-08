@@ -35,7 +35,7 @@ project "Minecraft"
 	pchheader "mcpch.h"
 	pchsource "Minecraft/src/mcpch.cpp"
 
-	postbuildcommands "{COPYDIR} Resources/ ../bin/%{outputdir}/Minecraft/Resources"
+	debugdir "%{wks.location}"
 
 	files
 	{
