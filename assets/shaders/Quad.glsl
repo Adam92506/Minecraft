@@ -1,27 +1,70 @@
 #type vertex
-#version 330 core
+#version 430 core
 
-layout(location = 0) in vec2 a_Position;
-layout(location = 1) in vec4 a_Color;
+#define VERTEX_POS_X_BITMASK uint(0xF)
+#define VERTEX_POS_Y_BITMASK uint(0xFF0)
+#define VERTEX_POS_Z_BITMASK uint(0xF000)
+#define VERTEX_TEXID_BITMASK uint(0x3FFF0000)
+#define VERTEX_UV_X_BITMASK  uint(0x40000000)
+#define VERTEX_UV_Y_BITMASK  uint(0x80000000)
 
-out vec4 v_Color;
+layout(location = 0) in uint a_CompressedData;
+
+uniform mat4 u_ViewProjection;
+uniform mat4 u_Transform;
+
+uniform uvec2 u_AtlasSize;
+uniform uvec2 u_TextureSize;
+
+out vec2 v_TexCoord;
+
+void CalculateTexCoord(in uvec2 uv, in uint texID, out vec2 texCoord)
+{
+    uint startX = texID % u_AtlasSize.x;
+    uint startY = texID / u_AtlasSize.y;
+
+    uint xPos = startX + uv.x;
+    uint yPos = startY + uv.y;
+
+    texCoord.x = float(xPos) / float(u_AtlasSize.x);
+    texCoord.y = float(yPos) / float(u_AtlasSize.y);
+}
+
+void ExtractVertexData(in uint compressedData, out uvec3 position, out vec2 texCoord)
+{
+    // Extract Position
+    position.x = (compressedData & VERTEX_POS_X_BITMASK);
+    position.y = (compressedData & VERTEX_POS_Y_BITMASK) >> 4;
+    position.z = (compressedData & VERTEX_POS_Z_BITMASK) >> 12;
+
+    // Extract Texture ID
+    uint texID = (compressedData & VERTEX_TEXID_BITMASK) >> 16;
+
+    // Extract UV
+    uvec2 uv;
+    uv.x = (compressedData & VERTEX_UV_X_BITMASK) >> 30;
+    uv.y = (compressedData & VERTEX_UV_Y_BITMASK) >> 31;
+    CalculateTexCoord(uv, texID, texCoord);
+}
 
 void main()
 {
-    v_Color = a_Color;
-    gl_Position = vec4(a_Position, 0.0f, 0.0f);
+    uvec3 position;
+    ExtractVertexData(a_CompressedData, position, v_TexCoord);
+
+    gl_Position = u_ViewProjection * u_Transform * vec4(position, 1.0);
 };
 
 #type fragment
-#version 330 core
+#version 430 core
 
 layout(location = 0) out vec4 color;
 
-in vec4 v_Color;
+in vec2 v_TexCoord;
 
 uniform sampler2D u_Texture;
 
 void main()
 {
-    color = v_Color;
+    color = texture(u_Texture, v_TexCoord);
 };

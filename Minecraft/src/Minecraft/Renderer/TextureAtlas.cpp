@@ -30,7 +30,7 @@ namespace Minecraft
 
 				m_TextureIDMap.insert({ file.path().stem().generic_string(), index });
 
-				index += 1;
+				index++;
 			}
 
 			else
@@ -58,7 +58,7 @@ namespace Minecraft
 		
 		for (uint32_t y = 0; y < m_TextureHeight; y++)
 		{
-			uint32_t yPos = std::floorf(index / m_AtlasSize) * m_TextureHeight + y;
+			uint32_t yPos = (m_AtlasSize - std::floorf(index / m_AtlasSize) - 1) * m_TextureHeight + y;
 			for (uint32_t x = 0; x < textureWidth; x++)
 			{
 				uint32_t xPos = (index % m_AtlasSize) * textureWidth + x;

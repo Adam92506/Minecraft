@@ -15,20 +15,17 @@ namespace Minecraft
 
 	struct Image
 	{
+		uint8_t* ImageData;
+		uint32_t Width, Height, Size;
+		ImageFormat Format;
+
 		Image(const std::string filePath, bool flipImage);
 
 		Image(uint32_t width, uint32_t height, ImageFormat format);
 
-		Image(uint8_t* imageData, uint32_t width, uint32_t height, ImageFormat format)
-			: ImageData(imageData), Width(width), Height(height), Format(format) {}
-
 		~Image();
 
 		void FlipVerticaly();
-
-		uint8_t* ImageData;
-		uint32_t Width = 0, Height = 0, Size = 0;
-		ImageFormat Format = ImageFormat::None;
 	};
 
 	namespace Utils

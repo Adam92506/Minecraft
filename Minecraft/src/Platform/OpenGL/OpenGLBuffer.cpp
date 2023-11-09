@@ -14,7 +14,7 @@ namespace Minecraft {
 		glBufferData(GL_ARRAY_BUFFER, size, nullptr, GL_STATIC_DRAW);
 	}
 
-	OpenGLVertexBuffer::OpenGLVertexBuffer(float* verticies, uint32_t size)
+	OpenGLVertexBuffer::OpenGLVertexBuffer(void* verticies, uint32_t size)
 	{
 		glCreateBuffers(1, &m_RendererID);
 		glBindBuffer(GL_ARRAY_BUFFER, m_RendererID);

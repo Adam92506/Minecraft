@@ -8,7 +8,7 @@ namespace Minecraft {
 	{
 	public:
 		OpenGLVertexBuffer(uint32_t size);
-		OpenGLVertexBuffer(float* verticies, uint32_t size);
+		OpenGLVertexBuffer(void* verticies, uint32_t size);
 		virtual ~OpenGLVertexBuffer();
 
 		virtual void Bind() const override;

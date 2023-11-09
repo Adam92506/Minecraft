@@ -17,8 +17,6 @@ namespace Minecraft
 			Width = (uint32_t)width;
 			Height = (uint32_t)height;
 
-			Size = Width * Utils::ImageFormatToSize(Format) * Height;
-
 			if (channels == 2)
 			{
 				Format = ImageFormat::RG8;
@@ -38,6 +36,8 @@ namespace Minecraft
 			{
 				MC_ERROR("Unable to load image: Image format not supported");
 			}
+
+			Size = Width * Utils::ImageFormatToSize(Format) * Height;
 		}
 
 		else
@@ -49,7 +49,7 @@ namespace Minecraft
 	Image::Image(uint32_t width, uint32_t height, ImageFormat format)
 		: Width(width), Height(height), Format(format)
 	{
-		Size = width * Utils::ImageFormatToSize(format) * height;
+		Size = Width * Utils::ImageFormatToSize(Format) * Height;
 		ImageData = new uint8_t[Size];
 	}
 

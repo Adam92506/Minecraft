@@ -10,6 +10,8 @@
 
 #include <glm/gtc/matrix_transform.hpp>
 
+#include "Minecraft/Chunk/Vertex.h"
+
 namespace Minecraft
 {
 	Application* Application::s_Instance = nullptr;
@@ -27,13 +29,16 @@ namespace Minecraft
 
 		m_Position = { 0.0f, 0.0f, 0.0f };
 
-		float vertices[4 * 5]
-		{
-			-0.5f, -0.5f, 0.0f, 0.0f, 0.0f,
-			0.5f, -0.5f, 0.0f, 1.0f, 0.0f,
-			0.5f, 0.5f, 0.0f, 1.0f, 1.0f,
-			-0.5f, 0.5f, 0.0f, 0.0f, 1.0f
-		};
+		m_TextureAtlas = TextureAtlas("assets/textures/block/", 32, 32, ImageFormat::RGBA8);
+		m_TextureAtlas.GenerateTextureAtlas();
+
+		uint16_t texID = m_TextureAtlas.GetTextureID("barrel_bottom");
+
+		uint32_t vertices[4];
+		vertices[0] = Vertex::CompressVertexData({ 0, 0, 0 }, texID, { 0, 0 });
+		vertices[1] = Vertex::CompressVertexData({ 1, 0, 0 }, texID, { 1, 0 });
+		vertices[2] = Vertex::CompressVertexData({ 1, 1, 0 }, texID, { 1, 1 });
+		vertices[3] = Vertex::CompressVertexData({ 0, 1, 0 }, texID, { 0, 1 });
 
 		uint32_t indecies[6]
 		{
@@ -42,8 +47,7 @@ namespace Minecraft
 
 		m_VertexBuffer = VertexBuffer::Create(vertices, sizeof(vertices));
 		m_VertexBuffer->SetLayout({
-			{ ShaderDataType::Float3, "a_Position" },
-			{ ShaderDataType::Float2, "a_TexCoord" }
+			{ ShaderDataType::UInt, "a_CompressedData" }
 			});
 
 		m_IndexBuffer = IndexBuffer::Create(indecies, sizeof(indecies) / sizeof(float));
@@ -52,10 +56,7 @@ namespace Minecraft
 		m_VertexArray->AddVertexBuffer(m_VertexBuffer);
 		m_VertexArray->SetIndexBuffer(m_IndexBuffer);
 
-		m_TextureAtlas = TextureAtlas("assets/textures/block/", 32, 32, ImageFormat::RGBA8);
-		m_TextureAtlas.GenerateTextureAtlas();
-
-		m_Shader = Shader::Create("assets/shaders/Block.glsl");
+		m_Shader = Shader::Create("assets/shaders/Quad.glsl");
 
 		this->Run();
 	}
@@ -77,6 +78,9 @@ namespace Minecraft
 
 	void Application::Run()
 	{
+		int32_t texID = 0;
+		bool drawFullAtlas = false;
+
 		Renderer::Init();
 
 		while (m_Running)
@@ -93,6 +97,10 @@ namespace Minecraft
 			Renderer::BeginScene(m_CameraController.GetCamera());
 
 			glm::mat4 transform = glm::translate(glm::mat4(1.0f), m_Position);
+			m_Shader->SetUInt2("u_AtlasSize", { m_TextureAtlas.GetAtlasSize(), m_TextureAtlas.GetAtlasSize() });
+			m_Shader->SetUInt2("u_TextureSize", { m_TextureAtlas.GetTextureWidth(), m_TextureAtlas.GetTextureHeight() });
+			m_Shader->SetUInt("u_TexID", (uint32_t)texID);
+			m_Shader->SetUInt("u_DrawFullAtlas", drawFullAtlas);
 			Renderer::Submit(m_Shader, m_VertexArray, m_TextureAtlas.GetTexture(), transform);
 
 			if (!m_Minimized)
@@ -109,6 +117,9 @@ namespace Minecraft
 					ImGui::Text("Camera Position: %f, %f, %f", position.x, position.y, position.z);
 					ImGui::Text("Camera Rotation: %f, %f, %f", rotation.x, rotation.y, rotation.z);
 				}
+
+				ImGui::InputInt("Texture ID", &texID);
+				ImGui::Checkbox("Draw Full Atlas", &drawFullAtlas);
 
 				ImGui::End();
 

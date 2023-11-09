@@ -12,11 +12,15 @@ namespace Minecraft
 	public:
 		TextureAtlas() = default;
 		TextureAtlas(const std::string& folderPath, uint32_t textureWidth, uint32_t textureHeight, ImageFormat imageFormat)
-			: m_FolderPath(folderPath), m_TextureWidth(textureWidth), m_TextureHeight(textureHeight), m_ImageFormat(imageFormat) {}
+			: m_FolderPath(folderPath), m_TextureWidth(textureWidth), m_TextureHeight(textureHeight), m_ImageFormat(imageFormat), m_AtlasSize(0) {}
 
 		void GenerateTextureAtlas();
 
 		uint16_t GetTextureID(const std::string& textureName) { return m_TextureIDMap[textureName]; }
+
+		uint32_t GetAtlasSize() const { return m_AtlasSize; }
+		uint32_t GetTextureWidth() const { return m_TextureWidth; }
+		uint32_t GetTextureHeight() const { return m_TextureHeight; }
 
 		const Ref<Texture2D>& GetTexture() const { return m_Texture; }
 	private:

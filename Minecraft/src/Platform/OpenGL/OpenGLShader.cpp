@@ -177,14 +177,54 @@ namespace Minecraft {
 		glUseProgram(0);
 	}
 
-	void OpenGLShader::SetInt(const std::string& name, int value)
+	void OpenGLShader::SetInt(const std::string& name, int32_t value)
 	{
 		UploadUniformInt(name, value);
 	}
 
-	void OpenGLShader::SetIntArray(const std::string& name, int* values, uint32_t count)
+	void OpenGLShader::SetInt2(const std::string& name, const glm::ivec2& value)
+	{
+		UploadUniformInt2(name, value);
+	}
+
+	void OpenGLShader::SetInt3(const std::string& name, const glm::ivec3& value)
+	{
+		UploadUniformInt3(name, value);
+	}
+
+	void OpenGLShader::SetInt4(const std::string& name, const glm::ivec4& value)
+	{
+		UploadUniformInt4(name, value);
+	}
+
+	void OpenGLShader::SetIntArray(const std::string& name, int32_t* values, uint32_t count)
 	{
 		UploadUniformIntArray(name, values, count);
+	}
+
+	void OpenGLShader::SetUInt(const std::string& name, uint32_t value)
+	{
+		UploadUniformUInt(name, value);
+	}
+
+	void OpenGLShader::SetUInt2(const std::string& name, const glm::uvec2& value)
+	{
+		UploadUniformUInt2(name, value);
+	}
+
+	void OpenGLShader::SetUInt3(const std::string& name, const glm::uvec3& value)
+	{
+		UploadUniformUInt3(name, value);
+	}
+
+	void OpenGLShader::SetUInt4(const std::string& name, const glm::uvec4& value)
+	{
+		UploadUniformUInt4(name, value);
+	}
+
+	void OpenGLShader::SetUIntArray(const std::string& name, uint32_t* values, uint32_t count)
+	{
+		UploadUniformUIntArray(name, values, count);
 	}
 
 	void OpenGLShader::SetFloat(const std::string& name, float value)
@@ -207,6 +247,11 @@ namespace Minecraft {
 		UploadUniformFloat4(name, value);
 	}
 
+	void OpenGLShader::SetFloatArray(const std::string& name, float* values, uint32_t count)
+	{
+		UploadUniformFloatArray(name, values, count);
+	}
+
 	void OpenGLShader::SetMat3(const std::string& name, const glm::mat3& value)
 	{
 		UploadUniformMat3(name, value);
@@ -218,16 +263,64 @@ namespace Minecraft {
 	}
 
 
-	void OpenGLShader::UploadUniformInt(const std::string& name, int value)
+	void OpenGLShader::UploadUniformInt(const std::string& name, int32_t value)
 	{
 		GLint location = glGetUniformLocation(m_RendererID, name.c_str());
 		glUniform1i(location, value);
 	}
 
-	void OpenGLShader::UploadUniformIntArray(const std::string& name, int* values, uint32_t count)
+	void OpenGLShader::UploadUniformInt2(const std::string& name, const glm::ivec2& value)
+	{
+		GLint location = glGetUniformLocation(m_RendererID, name.c_str());
+		glUniform2i(location, value.x, value.y);
+	}
+
+	void OpenGLShader::UploadUniformInt3(const std::string& name, const glm::ivec3& value)
+	{
+		GLint location = glGetUniformLocation(m_RendererID, name.c_str());
+		glUniform3i(location, value.x, value.y, value.z);
+	}
+
+	void OpenGLShader::UploadUniformInt4(const std::string& name, const glm::ivec4& value)
+	{
+		GLint location = glGetUniformLocation(m_RendererID, name.c_str());
+		glUniform4i(location, value.x, value.y, value.z, value.w);
+	}
+
+	void OpenGLShader::UploadUniformIntArray(const std::string& name, int32_t* values, uint32_t count)
 	{
 		GLint location = glGetUniformLocation(m_RendererID, name.c_str());
 		glUniform1iv(location, count, values);
+	}
+
+	void OpenGLShader::UploadUniformUInt(const std::string& name, uint32_t value)
+	{
+		GLint location = glGetUniformLocation(m_RendererID, name.c_str());
+		glUniform1ui(location, value);
+	}
+
+	void OpenGLShader::UploadUniformUInt2(const std::string& name, const glm::uvec2& value)
+	{
+		GLint location = glGetUniformLocation(m_RendererID, name.c_str());
+		glUniform2ui(location, value.x, value.y);
+	}
+
+	void OpenGLShader::UploadUniformUInt3(const std::string& name, const glm::uvec3& value)
+	{
+		GLint location = glGetUniformLocation(m_RendererID, name.c_str());
+		glUniform3ui(location, value.x, value.y, value.z);
+	}
+
+	void OpenGLShader::UploadUniformUInt4(const std::string& name, const glm::uvec4& value)
+	{
+		GLint location = glGetUniformLocation(m_RendererID, name.c_str());
+		glUniform4ui(location, value.x, value.y, value.z, value.w);
+	}
+
+	void OpenGLShader::UploadUniformUIntArray(const std::string& name, uint32_t* values, uint32_t count)
+	{
+		GLint location = glGetUniformLocation(m_RendererID, name.c_str());
+		glUniform1uiv(location, count, values);
 	}
 
 	void OpenGLShader::UploadUniformFloat(const std::string& name, float value)
@@ -252,6 +345,12 @@ namespace Minecraft {
 	{
 		GLint location = glGetUniformLocation(m_RendererID, name.c_str());
 		glUniform4f(location, value.x, value.y, value.z, value.w);
+	}
+
+	void OpenGLShader::UploadUniformFloatArray(const std::string& name, float* values, uint32_t count)
+	{
+		GLint location = glGetUniformLocation(m_RendererID, name.c_str());
+		glUniform1fv(location, count, values);
 	}
 
 	void OpenGLShader::UploadUniformMat3(const std::string& name, const glm::mat3& value)

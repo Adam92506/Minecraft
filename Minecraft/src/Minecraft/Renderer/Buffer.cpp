@@ -17,7 +17,7 @@ namespace Minecraft {
 		#endif
 	}
 
-	Ref<VertexBuffer> VertexBuffer::Create(float* verticies, uint32_t size)
+	Ref<VertexBuffer> VertexBuffer::Create(void* verticies, uint32_t size)
 	{
 		#ifdef MC_PLATFORM_WINDOWS
 			return CreateRef<OpenGLVertexBuffer>(verticies, size);
