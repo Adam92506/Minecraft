@@ -4,8 +4,8 @@
 namespace Minecraft
 {
 
-	std::unordered_map<std::string, uint32_t> BlockMap::s_BlockIDMap;
-	std::unordered_map<uint32_t, BlockProp> BlockMap::s_BlockMap;
+	std::unordered_map<std::string, uint16_t> BlockMap::s_BlockIDMap;
+	std::unordered_map<uint16_t, BlockProp> BlockMap::s_BlockMap;
 
 	void BlockMap::Init(const std::string& filePath)
 	{
@@ -20,7 +20,7 @@ namespace Minecraft
 			}
 
 			std::string name = block.first.as<std::string>();
-			uint32_t id = block.second["id"].as<uint32_t>();
+			uint16_t id = block.second["id"].as<uint16_t>();
 			s_BlockIDMap.insert({ name, id });
 
 			BlockProp blockProp;
