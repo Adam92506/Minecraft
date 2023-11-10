@@ -10,3 +10,6 @@
 [submodule "Minecraft/vendor/ImGui"]
 	path = Minecraft/vendor/ImGui
 	url = https://github.com/Adam92506/imgui.git
+[submodule "Minecraft/vendor/yamlCpp"]
+	path = Minecraft/vendor/yamlCpp
+	url = https://github.com/Adam92506/yaml-cpp.git
