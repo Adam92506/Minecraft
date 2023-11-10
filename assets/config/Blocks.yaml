@@ -19,3 +19,17 @@ dirt:
   side: dirt
   isTransparent: false
   isSolid: true
+stone:
+  id: 4
+  top: stone
+  bottom: stone
+  side: stone
+  isTransparent: false
+  isSolid: true
+bedrock:
+  id: 5
+  top: bedrock
+  bottom: bedrock
+  side: bedrock
+  isTransparent: false
+  isSolid: true
