@@ -18,6 +18,8 @@
 
 #include "Minecraft/Core/Log.h"
 
+#include <glm/glm.hpp>
+
 #ifdef MC_PLATFORM_WINDOWS
 	#include <Windows.h>
 #endif
