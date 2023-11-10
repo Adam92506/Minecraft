@@ -17,11 +17,13 @@ IncludeDir["glfw"] = "Minecraft/vendor/glfw/include"
 IncludeDir["glad"] = "Minecraft/vendor/glad/include"
 IncludeDir["glm"] = "Minecraft/vendor/glm"
 IncludeDir["stb_image"] = "Minecraft/vendor/stb_image"
-IncludeDir["ImGui"] = "Minecraft/vendor/ImGui/src"
+IncludeDir["ImGui"] = "Minecraft/vendor/ImGui/"
+IncludeDir["yamlCpp"] = "Minecraft/vendor/yamlCpp/include"
 
 include "Minecraft/vendor/glfw"
 include "Minecraft/vendor/glad"
 include "Minecraft/vendor/ImGui"
+include "Minecraft/vendor/yamlCpp"
 
 project "Minecraft"
 	location "Minecraft"
@@ -41,6 +43,7 @@ project "Minecraft"
 	{
 		"%{prj.name}/src/**.h",
 		"%{prj.name}/src/**.cpp",
+
 		"%{prj.name}/vendor/stb_image/**.h",
 		"%{prj.name}/vendor/stb_image/**.cpp"
 	}
@@ -54,7 +57,8 @@ project "Minecraft"
 		"%{IncludeDir.glm}",
 		"%{IncludeDir.stb_image}",
 		"%{IncludeDir.stb_image}/src",
-		"%{IncludeDir.ImGui}"
+		"%{IncludeDir.ImGui}",
+		"%{IncludeDir.yamlCpp}"
 	}
 
 	links
@@ -62,7 +66,8 @@ project "Minecraft"
 		"GLFW",
 		"GLAD",
 		"opengl32.lib",
-		"ImGui"
+		"ImGui",
+		"yamlCpp"
 	}
 
 	filter "system:windows"
@@ -70,7 +75,9 @@ project "Minecraft"
 		defines 
 		{
 			"MC_PLATFORM_WINDOWS",
-			"GLFW_INCLUDE_NONE"
+			"GLFW_INCLUDE_NONE",
+			"_CRT_SECURE_NO_WARNINGS",
+			"YAML_CPP_STATIC_DEFINE"
 		}
 
 	filter "configurations:Debug"
