@@ -10,7 +10,8 @@
 
 #include <glm/gtc/matrix_transform.hpp>
 
-#include "Minecraft/Chunk/Vertex.h"
+#include "Minecraft/Chunk/Block.h"
+#include "Minecraft/Chunk/BlockMap.h"
 
 namespace Minecraft
 {
@@ -29,10 +30,14 @@ namespace Minecraft
 
 		m_Position = { 0.0f, 0.0f, 0.0f };
 
+		BlockMap::Init("assets/config/Blocks.yaml");
+
 		m_TextureAtlas = TextureAtlas("assets/textures/block/", 32, 32, ImageFormat::RGBA8);
 		m_TextureAtlas.GenerateTextureAtlas();
 
-		uint16_t texID = m_TextureAtlas.GetTextureID("barrel_bottom");
+		BlockProp blockProp = BlockMap::GetBlockProps(BlockMap::GetBlockID("grass_block"));
+
+		uint16_t texID = m_TextureAtlas.GetTextureID(blockProp.BottomTexture);
 
 		uint32_t vertices[4];
 		vertices[0] = Vertex::CompressVertexData({ 0, 0, 0 }, texID, { 0, 0 });

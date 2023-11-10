@@ -1,0 +1,21 @@
+air_block:
+  id: 1
+  top: none
+  bottom: none
+  side: none
+  isTransparent: true
+  isSolid: false
+grass_block:
+  id: 2
+  top: grass_block_top
+  bottom: dirt
+  side: grass_block_side
+  isTransparent: false
+  isSolid: true
+dirt:
+  id: 3
+  top: dirt
+  bottom: dirt
+  side: dirt
+  isTransparent: false
+  isSolid: true
