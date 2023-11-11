@@ -32,7 +32,7 @@ namespace Minecraft
 		glm::vec3 m_CameraPosition = { 0.0f, 0.0f, -3.0f };
 		glm::vec3 m_CameraRotation = { 0.0f, 180.0f, 0.0f };
 
-		float m_CameraTranslationSpeed = 2.0f, m_CameraRotationSpeed = 90.0f;
+		float m_CameraTranslationSpeed = 10.0f, m_CameraRotationSpeed = 90.0f;
 
 		Camera m_Camera;
 	};
