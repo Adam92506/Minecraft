@@ -16,6 +16,7 @@
 #include "Minecraft/Renderer/CameraController.h"
 
 #include "Minecraft/Renderer/TextureAtlas.h"
+#include "Minecraft/World/Chunk.h"
 
 namespace Minecraft {
 
@@ -30,6 +31,7 @@ namespace Minecraft {
 		inline Window& GetWindow() { return *m_Window; }
 
 		inline static Application& Get() { return *s_Instance; }
+		inline static TextureAtlas& GetTextureAtlas() { return *s_TextureAtlas; }
 	private:
 		void Run();
 
@@ -44,14 +46,12 @@ namespace Minecraft {
 	private:
 		glm::vec3 m_Position;
 		CameraController m_CameraController;
-		TextureAtlas m_TextureAtlas;
 
-		Ref<VertexBuffer> m_VertexBuffer;
-		Ref<IndexBuffer> m_IndexBuffer;
-		Ref<VertexArray> m_VertexArray;
+		Chunk* m_Chunk;
 		Ref<Shader> m_Shader;
 	private:
 		static Application* s_Instance;
+		static TextureAtlas* s_TextureAtlas;
 	};
 
 }

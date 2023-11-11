@@ -1,10 +1,10 @@
 #type vertex
 #version 430 core
 
-#define VERTEX_POS_X_BITMASK uint(0xF)
-#define VERTEX_POS_Y_BITMASK uint(0xFF0)
-#define VERTEX_POS_Z_BITMASK uint(0xF000)
-#define VERTEX_TEXID_BITMASK uint(0x3FFF0000)
+#define VERTEX_POS_X_BITMASK uint(0x1F)
+#define VERTEX_POS_Y_BITMASK uint(0x1FE0)
+#define VERTEX_POS_Z_BITMASK uint(0x3E000)
+#define VERTEX_TEXID_BITMASK uint(0x3FFC0000)
 #define VERTEX_UV_X_BITMASK  uint(0x40000000)
 #define VERTEX_UV_Y_BITMASK  uint(0x80000000)
 
@@ -34,11 +34,11 @@ void ExtractVertexData(in uint compressedData, out uvec3 position, out vec2 texC
 {
     // Extract Position
     position.x = (compressedData & VERTEX_POS_X_BITMASK);
-    position.y = (compressedData & VERTEX_POS_Y_BITMASK) >> 4;
-    position.z = (compressedData & VERTEX_POS_Z_BITMASK) >> 12;
+    position.y = (compressedData & VERTEX_POS_Y_BITMASK) >> 5;
+    position.z = (compressedData & VERTEX_POS_Z_BITMASK) >> 13;
 
     // Extract Texture ID
-    uint texID = (compressedData & VERTEX_TEXID_BITMASK) >> 16;
+    uint texID = (compressedData & VERTEX_TEXID_BITMASK) >> 18;
 
     // Extract UV
     uvec2 uv;
