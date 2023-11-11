@@ -11,7 +11,7 @@ namespace Minecraft {
 	{
 		glCreateBuffers(1, &m_RendererID);
 		glBindBuffer(GL_ARRAY_BUFFER, m_RendererID);
-		glBufferData(GL_ARRAY_BUFFER, size, nullptr, GL_STATIC_DRAW);
+		glBufferData(GL_ARRAY_BUFFER, size, nullptr, GL_DYNAMIC_DRAW);
 	}
 
 	OpenGLVertexBuffer::OpenGLVertexBuffer(void* verticies, uint32_t size)
@@ -42,6 +42,11 @@ namespace Minecraft {
 		glBufferSubData(GL_ARRAY_BUFFER, 0, size, data);
 	}
 
+	void OpenGLVertexBuffer::Resize(uint32_t size)
+	{
+		glBufferData(GL_ARRAY_BUFFER, size, nullptr, GL_DYNAMIC_DRAW);
+	}
+
 	// Index Bufer ----------------------------------------------------------------------------------------------
 
 	OpenGLIndexBuffer::OpenGLIndexBuffer(uint32_t* indecies, uint32_t count)
@@ -65,6 +70,12 @@ namespace Minecraft {
 	void OpenGLIndexBuffer::Unbind() const
 	{
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+	}
+
+	void OpenGLIndexBuffer::Resize(uint32_t* indecies, uint32_t count)
+	{
+		m_Count = count;
+		glBufferData(GL_ELEMENT_ARRAY_BUFFER, count * sizeof(uint32_t), indecies, GL_STATIC_DRAW);
 	}
 
 }

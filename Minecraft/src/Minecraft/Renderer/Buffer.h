@@ -118,6 +118,9 @@ namespace Minecraft {
 		virtual void Bind() const = 0;
 		virtual void Unbind() const = 0;
 
+		// Will ONLY resize buffer, data will NOT be copied into new buffer;
+		virtual void Resize(uint32_t size) = 0;
+		
 		virtual void SetData(const void* data, uint32_t size) = 0;
 
 		virtual const BufferLayout& GetLayout() const = 0;
@@ -134,6 +137,8 @@ namespace Minecraft {
 
 		virtual void Bind() const = 0;
 		virtual void Unbind() const = 0;
+
+		virtual void Resize(uint32_t* indecies, uint32_t count) = 0;
 
 		virtual uint32_t GetCount() const = 0;
 

@@ -33,7 +33,7 @@ namespace Minecraft
 
 	}
 
-	void Renderer::Submit(const Ref<Shader>& shader, const Ref<VertexArray>& vertexArray, const Ref<Texture2D>& texture, const glm::mat4& transform)
+	void Renderer::Submit(const Ref<Shader>& shader, const Ref<VertexArray>& vertexArray, const Ref<Texture2D>& texture, const glm::mat4& transform, uint32_t indexCount)
 	{
 		texture->Bind();
 
@@ -42,7 +42,7 @@ namespace Minecraft
 		shader->SetMat4("u_Transform", transform);
 
 		vertexArray->Bind();
-		RenderCommand::DrawIndexed(vertexArray);
+		RenderCommand::DrawIndexed(vertexArray, indexCount);
 	}
 
 }
