@@ -1,0 +1,48 @@
+air_block:
+  name: "Air Block"
+  id: 1
+  top: none
+  bottom: none
+  side: none
+  isTransparent: true
+  isSolid: false
+grass_block:
+  name: "Grass Block"
+  id: 2
+  top: grass_block_top
+  bottom: dirt
+  side: grass_block_side
+  isTransparent: false
+  isSolid: true
+dirt:
+  name: "Dirt"
+  id: 3
+  top: dirt
+  bottom: dirt
+  side: dirt
+  isTransparent: false
+  isSolid: true
+stone:
+  name: "Stone"
+  id: 4
+  top: stone
+  bottom: stone
+  side: stone
+  isTransparent: false
+  isSolid: true
+bedrock:
+  name: "Bedrock"
+  id: 5
+  top: bedrock
+  bottom: bedrock
+  side: bedrock
+  isTransparent: false
+  isSolid: true
+debug:
+  name: "Debug"
+  id: 6
+  top: debug
+  bottom: debug
+  side: debug
+  isTransparent: false
+  isSolid: true
