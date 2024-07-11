@@ -1,0 +1,12 @@
+[submodule "Minecraft/vendor/spdlog"]
+	path = Minecraft/vendor/spdlog
+	url = git@github.com:gabime/spdlog.git
+[submodule "Minecraft/vendor/glfw"]
+	path = Minecraft/vendor/glfw
+	url = git@github.com:TheCherno/glfw.git
+[submodule "Minecraft/vendor/glm"]
+	path = Minecraft/vendor/glm
+	url = git@github.com:g-truc/glm.git
+[submodule "Minecraft/vendor/yamlCpp"]
+	path = Minecraft/vendor/yamlCpp
+	url = https://github.com/Adam92506/yaml-cpp.git
